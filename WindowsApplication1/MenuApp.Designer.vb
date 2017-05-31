@@ -51,13 +51,13 @@ Partial Class MenuApp
         'BukuAnggotaToolStripMenuItem
         '
         Me.BukuAnggotaToolStripMenuItem.Name = "BukuAnggotaToolStripMenuItem"
-        Me.BukuAnggotaToolStripMenuItem.Size = New System.Drawing.Size(152, 24)
+        Me.BukuAnggotaToolStripMenuItem.Size = New System.Drawing.Size(148, 24)
         Me.BukuAnggotaToolStripMenuItem.Text = "Input Buku"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 24)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(148, 24)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'LAPORANToolStripMenuItem
@@ -71,7 +71,7 @@ Partial Class MenuApp
         'DataBukuToolStripMenuItem
         '
         Me.DataBukuToolStripMenuItem.Name = "DataBukuToolStripMenuItem"
-        Me.DataBukuToolStripMenuItem.Size = New System.Drawing.Size(195, 24)
+        Me.DataBukuToolStripMenuItem.Size = New System.Drawing.Size(146, 24)
         Me.DataBukuToolStripMenuItem.Text = "Data Buku"
         '
         'MenuApp

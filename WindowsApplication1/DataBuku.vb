@@ -31,8 +31,18 @@ Public Class DataBukuForm
         TahunBukuTB.Text = ""
         JumlahBukuTB.Text = ""
     End Sub
+
+    Sub ClearLB()
+        KodeBuku.Text = "None"
+        JudulBukuLabel.Text = "Judul buku tidak ada.."
+        Author.Text = "Tidak ada data.."
+        TahunLabel.Text = "Tidak ada data.."
+        ThumbBox.Hide()
+
+    End Sub
     Private Sub DataBukuForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
+
             conmysql()
             dtb = New DataTable
             Dim SqlAll = "select * from buku"
@@ -73,41 +83,7 @@ Public Class DataBukuForm
         fs.Close()
     End Sub
 
-    Private Sub SimpanButton_Click(sender As Object, e As EventArgs) Handles SimpanButton.Click
-        Try
-            cmd.CommandType = CommandType.Text
-            cmd.Parameters.Add(New MySqlParameter("@kodebuku", KodeBukuTB.Text))
-            cmd.Parameters.Add(New MySqlParameter("@judulbuku", JudulBukuTB.Text))
-            cmd.Parameters.Add(New MySqlParameter("@pengarang", PengarangTB.Text))
-            cmd.Parameters.Add(New MySqlParameter("@tahun", TahunBukuTB.Text))
-            cmd.Parameters.Add(New MySqlParameter("@jumlah", JumlahBukuTB.Text))
-            cmd.Parameters.Add(New MySqlParameter("@thumb", MySqlDbType.Blob)).Value = rawData
-            conmysql()
-            If Simpan = False Then
-                cmd.CommandText = "update buku set kodebuku=@kodebuku, judulbuku=@judulbuku, pengarang=@pengarang, tahun=@tahun, jumlah=@jumlah where kodebuku='" & KodeBukuTB.Text & "';"
-                'cmd = New MySqlCommand(S, con)
 
-                MsgBox("Data Sukses di Update", MsgBoxStyle.MsgBoxRight, "Message")
-            Else
-                insert_gambar()
-                cmd.CommandText = "insert into buku(kodebuku,judulbuku,pengarang,tahun,jumlah,thumb) values(@kodebuku,@judulbuku,@pengarang,@tahun,@jumlah,@thumb)"
-                ' cmd = New MySqlCommand(SqlExec, con)
-
-
-                MsgBox("Data Sukses disimpan", MsgBoxStyle.MsgBoxRight, "Message")
-            End If
-            cmd.ExecuteNonQuery()
-            con.Close()
-            ClearTB()
-        Catch ex As Exception
-
-        End Try
-
-
-
-
-
-    End Sub
     Private Sub UploadThumbBtn_Click(sender As Object, e As EventArgs) Handles UploadThumbBtn.Click
         Dim OpenFileDialog1 As New OpenFileDialog
         OpenFileDialog1.Filter = "Picture Files (*)|*.jpg;*.png"
@@ -164,7 +140,7 @@ Public Class DataBukuForm
             cmd.ExecuteScalar()
             con.Close()
             MsgBox("Data Telah dihapus")
-            KodeBuku.Text = ""
+            ClearLB()
         Catch ex As Exception
             MsgBox("Ada yang salah")
         End Try
@@ -185,31 +161,56 @@ Public Class DataBukuForm
                 TahunBukuTB.Text = rd("tahun").ToString()
                 JumlahBukuTB.Text = rd("jumlah").ToString()
             End While
+            'rd.Close()
+            ''''''''''''''''
+            If Not (KodeBuku.Text = "None") Then
+                'Dim SqlKodeBuku = "select * from buku where kodebuku=@kodebuku"
+                'cmd = New MySqlCommand(SqlKodeBuku, con)
+                'cmd.Parameters.Add(New MySqlParameter("@kodebuku", KodeBukuTB.Text))
+                'cmd.ExecuteNonQuery()
+                'rd = cmd.ExecuteReader()
+                'rd.Read()
+                'If rd.HasRows Then
+                Simpan = True
+                SimpanButton.Text = "&Update Data"
+                'End If
+            Else
+                Simpan = False
+                SimpanButton.Text = "&Tambahkan Data"
+            End If
+            '''''''''''''''
             rd.Close()
             con.Close()
         Catch ex As Exception
         End Try
     End Sub
-
-    Private Sub KodeBukuTB_Click(sender As Object, e As EventArgs) Handles KodeBukuTB.Click
-        If KodeBukuTB.Text.Length > 0 Then
-            conmysql()
-            Dim SqlKodeBuku = "select * from buku where kodebuku=@kodebuku"
-            cmd = New MySqlCommand(SqlKodeBuku, con)
+    Private Sub SimpanButton_Click(sender As Object, e As EventArgs) Handles SimpanButton.Click
+        Try
+            cmd.CommandType = CommandType.Text
             cmd.Parameters.Add(New MySqlParameter("@kodebuku", KodeBukuTB.Text))
-            cmd.ExecuteNonQuery()
-            rd = cmd.ExecuteReader()
-            rd.Read()
-            If rd.HasRows Then
-                Simpan = False
-                SimpanButton.Text = "&Update Data"
+            cmd.Parameters.Add(New MySqlParameter("@judulbuku", JudulBukuTB.Text))
+            cmd.Parameters.Add(New MySqlParameter("@pengarang", PengarangTB.Text))
+            cmd.Parameters.Add(New MySqlParameter("@tahun", TahunBukuTB.Text))
+            cmd.Parameters.Add(New MySqlParameter("@jumlah", JumlahBukuTB.Text))
+            conmysql()
+            If Simpan = True Then
+                cmd.CommandText = "update buku set kodebuku=@kodebuku, judulbuku=@judulbuku, pengarang=@pengarang, tahun=@tahun, jumlah=@jumlah where kodebuku=@kodebuku;"
+                MsgBox("Data Sukses di Update", MsgBoxStyle.MsgBoxRight, "Message")
+                cmd.ExecuteNonQuery()
+            ElseIf Simpan = False Then
+                insert_gambar()
+                cmd.CommandText = "insert into buku(kodebuku,judulbuku,pengarang,tahun,jumlah,thumb) values('" & KodeBukuTB.Text & "',@judulbuku,@pengarang,@tahun,@jumlah,@thumb);"
+                cmd.Parameters.Add(New MySqlParameter("@thumb", MySqlDbType.Blob)).Value = rawData
+                MsgBox("Data Sukses disimpan", MsgBoxStyle.MsgBoxRight, "Message")
             End If
-        Else
-            Simpan = True
-            SimpanButton.Text = "&Tambahkan Data"
-            rd.Close()
+            cmd.ExecuteNonQuery()
             con.Close()
-        End If
+            ClearTB()
+        Catch ex As Exception
+        End Try
+    End Sub
+    Private Sub KodeBukuTB_Click(sender As Object, e As EventArgs) Handles KodeBukuTB.Click
+
 
     End Sub
 
@@ -219,5 +220,9 @@ Public Class DataBukuForm
 
     Private Sub JudulBukuLabel_Click(sender As Object, e As EventArgs) Handles JudulBukuLabel.Click
 
+    End Sub
+
+    Private Sub DetailGrid_Click(sender As Object, e As EventArgs) Handles DetailGrid.Click
+        DetailDataB.Show()
     End Sub
 End Class

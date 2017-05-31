@@ -31,7 +31,8 @@ Public Class LoginForm
         rd.Read()
         If rd.HasRows Then
             MsgBox("Login Berhasil", MsgBoxStyle.Information)
-            DataBukuForm.Show()
+            'DataBukuForm.Show()
+            MenuApp.Show()
             Me.Hide()
         Else
             rd.Close()
