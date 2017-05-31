@@ -9,23 +9,34 @@ Public Class DataBukuForm
     Private fileSize As UInt32
     Private rawData() As Byte
     Private fs As FileStream
-    Dim con As MySqlConnection = New MySqlConnection("server=localhost;user id=root;password=password;database=db_library")
+    Dim con As MySqlConnection = New MySqlConnection("server=localhost;user id=root;password=password;database=db_library;")
     'a set of commands in MySQL
     Dim cmd As New MySqlCommand
     'a Bridge between a database and datatable for retrieving and saving data.
     Dim dAdap As New MySqlDataAdapter
     'a specific table in the database
     Dim dtb As New DataTable
+    Dim Simpan As Boolean
+
+    Sub conmysql()
+        If con.State = ConnectionState.Closed Then
+            con.Open()
+        End If
+    End Sub
+
+    Sub ClearTB()
+        KodeBukuTB.Text = ""
+        JudulBukuTB.Text = ""
+        PengarangTB.Text = ""
+        TahunBukuTB.Text = ""
+        JumlahBukuTB.Text = ""
+    End Sub
     Private Sub DataBukuForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
-            con.Open()
+            conmysql()
             dtb = New DataTable
             Dim SqlAll = "select * from buku"
             cmd = New MySqlCommand(SqlAll, con)
-            'With cmd
-            '.Connection = con
-            '.CommandText = "select * from buku"
-            'End With 
             dAdap.SelectCommand = cmd
             dAdap.Fill(dtb)
             'CariGrid.DataSource = dtb
@@ -35,31 +46,13 @@ Public Class DataBukuForm
             For Each cari In dtb.Rows
                 CariBukuText.AutoCompleteCustomSource.Add(cari.Item("judulbuku").ToString)
             Next
+            dAdap.Dispose()
+            con.Close()
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
-        dAdap.Dispose()
-        con.Close()
-    End Sub
-
-
-
-    Private Sub CariGrid_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
 
     End Sub
-
-    Private Sub CariBukuText_Click_1(sender As Object, e As EventArgs) Handles CariBukuText.Click
-
-    End Sub
-
-    Private Sub Pengarang_Click(sender As Object, e As EventArgs) Handles Pengarang.Click
-
-    End Sub
-
-    Private Sub JudulBukuLabel_Click(sender As Object, e As EventArgs) Handles JudulBukuLabel.Click
-
-    End Sub
-
     Function ImageToByte(ByVal pbImg As System.Windows.Forms.PictureBox) As Byte()
         If pbImg Is Nothing Then
             Return Nothing
@@ -81,38 +74,40 @@ Public Class DataBukuForm
     End Sub
 
     Private Sub SimpanButton_Click(sender As Object, e As EventArgs) Handles SimpanButton.Click
-        Dim ms As New MemoryStream
-        If con.State = ConnectionState.Closed Then con.Open()
-        Dim SqlInsert = "insert into buku(kodebuku,judulbuku,pengarang,tahun,jumlah,thumb) values(@kodebuku,@judulbuku,@pengarang,@tahun,@jumlah,@thumb)"
-        cmd = New MySqlCommand(SqlInsert, con)
         Try
-            insert_gambar()
-            'dtb = New DataTable
+            cmd.CommandType = CommandType.Text
             cmd.Parameters.Add(New MySqlParameter("@kodebuku", KodeBukuTB.Text))
             cmd.Parameters.Add(New MySqlParameter("@judulbuku", JudulBukuTB.Text))
             cmd.Parameters.Add(New MySqlParameter("@pengarang", PengarangTB.Text))
             cmd.Parameters.Add(New MySqlParameter("@tahun", TahunBukuTB.Text))
             cmd.Parameters.Add(New MySqlParameter("@jumlah", JumlahBukuTB.Text))
             cmd.Parameters.Add(New MySqlParameter("@thumb", MySqlDbType.Blob)).Value = rawData
-            'LogoD.Image.Save(ms, LogoD.Image.RawFormat)
-            'Dim data As Byte() = ms.GetBuffer()
-            'Dim p As New MySqlParameter("@thumb", MySqlDbType.Blob)
-            'p.Value = data
-            'cmd.Parameters.Add(p)
+            conmysql()
+            If Simpan = False Then
+                cmd.CommandText = "update buku set kodebuku=@kodebuku, judulbuku=@judulbuku, pengarang=@pengarang, tahun=@tahun, jumlah=@jumlah where kodebuku='" & KodeBukuTB.Text & "';"
+                'cmd = New MySqlCommand(S, con)
+
+                MsgBox("Data Sukses di Update", MsgBoxStyle.MsgBoxRight, "Message")
+            Else
+                insert_gambar()
+                cmd.CommandText = "insert into buku(kodebuku,judulbuku,pengarang,tahun,jumlah,thumb) values(@kodebuku,@judulbuku,@pengarang,@tahun,@jumlah,@thumb)"
+                ' cmd = New MySqlCommand(SqlExec, con)
+
+
+                MsgBox("Data Sukses disimpan", MsgBoxStyle.MsgBoxRight, "Message")
+            End If
             cmd.ExecuteNonQuery()
-            MsgBox("Sukses Tersimpan")
-
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Kesalahan")
-        Finally
             con.Close()
+            ClearTB()
+        Catch ex As Exception
+
         End Try
+
+
+
+
+
     End Sub
-
-    Private Sub OpenFileDialog1_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles OpenFileDialog1.FileOk
-
-    End Sub
-
     Private Sub UploadThumbBtn_Click(sender As Object, e As EventArgs) Handles UploadThumbBtn.Click
         Dim OpenFileDialog1 As New OpenFileDialog
         OpenFileDialog1.Filter = "Picture Files (*)|*.jpg;*.png"
@@ -121,17 +116,13 @@ Public Class DataBukuForm
             strImageName = OpenFileDialog1.FileName
             'PictureBox1.Image = Image.FromFile(OpenFileDialog1.FileName)
         End If
-
     End Sub
-
-    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
-
-    End Sub
-
     Private Sub CariButton_Click(sender As Object, e As EventArgs) Handles CariButton.Click
         Try
-            con.Open()
+            conmysql()
             dtb = New DataTable
+            Dim ms As MemoryStream
+            Dim dataimage As Byte()
             Dim SqlJudul = "select * from buku where judulbuku like '%" & CariBukuText.Text & "%' "
             'With cmd
             '.Connection = con
@@ -139,24 +130,94 @@ Public Class DataBukuForm
             'End With
             cmd = New MySqlCommand(SqlJudul, con)
             rd = cmd.ExecuteReader
-            While (rd.Read())
-                KodeBuku.Text = rd("kodebuku").ToString()
-                Pengarang.Text = rd("pengarang").ToString()
-                JudulBukuLabel.Text = rd("judulbuku").ToString()
-                TahunLabel.Text = rd("tahun").ToString()
-            End While
-            rd.Close()
-            dAdap.SelectCommand = cmd
-            'dAdap.Fill(dtb)
+            If rd.HasRows() Then
+                While (rd.Read())
+                    KodeBuku.Text = rd("kodebuku").ToString()
+                    Author.Text = rd("pengarang").ToString()
+                    JudulBukuLabel.Text = rd("judulbuku").ToString()
+                    TahunLabel.Text = rd("tahun").ToString()
+                    dataimage = DirectCast(rd.Item("thumb"), Byte())
+                    ms = New MemoryStream(dataimage)
+                    ThumbBox.Image = Image.FromStream(ms)
+                End While
+                rd.Close()
+                dAdap.SelectCommand = cmd
+                dAdap.Fill(dtb)
+            Else
+                MsgBox("Data yang Anda cari tidak ada")
+            End If
+            CariBukuText.Text = ""
             'CariGrid.DataSource = dtb
+            dAdap.Dispose()
+            con.Close()
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
-        dAdap.Dispose()
+
+    End Sub
+    Private Sub HapusBuku_Click(sender As Object, e As EventArgs) Handles HapusBuku.Click
+        Dim SqlHapusBuku = "delete from buku where kodebuku=@kodebuku"
+        cmd = New MySqlCommand(SqlHapusBuku, con)
+        Try
+            con.Open()
+            cmd.Parameters.Add(New MySqlParameter("@kodebuku", KodeBuku.Text))
+            cmd.ExecuteScalar()
+            con.Close()
+            MsgBox("Data Telah dihapus")
+            KodeBuku.Text = ""
+        Catch ex As Exception
+            MsgBox("Ada yang salah")
+        End Try
         con.Close()
+    End Sub
+    Private Sub EditBuku_Click(sender As Object, e As EventArgs) Handles EditBuku.Click
+        'Dim SqlEdit = "update buku set kodebuku=@kodebuku, judulbuku=@judulbuku, pengarang=@pengarang, tahun=@tahun, jumlah=@jumlah where kodebuku=@kodebuku"
+        Try
+            conmysql()
+            Dim SqlCallEdit = "select * from buku where kodebuku like '%" & KodeBuku.Text & "%' "
+            cmd = New MySqlCommand(SqlCallEdit, con)
+            'cmd.Parameters.Add(New MySqlParameter("@kodebuku", KodeBuku.Text))
+            rd = cmd.ExecuteReader
+            While (rd.Read())
+                KodeBukuTB.Text = rd("kodebuku").ToString()
+                JudulBukuTB.Text = rd("judulbuku").ToString()
+                PengarangTB.Text = rd("pengarang").ToString()
+                TahunBukuTB.Text = rd("tahun").ToString()
+                JumlahBukuTB.Text = rd("jumlah").ToString()
+            End While
+            rd.Close()
+            con.Close()
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub KodeBukuTB_Click(sender As Object, e As EventArgs) Handles KodeBukuTB.Click
+        If KodeBukuTB.Text.Length > 0 Then
+            conmysql()
+            Dim SqlKodeBuku = "select * from buku where kodebuku=@kodebuku"
+            cmd = New MySqlCommand(SqlKodeBuku, con)
+            cmd.Parameters.Add(New MySqlParameter("@kodebuku", KodeBukuTB.Text))
+            cmd.ExecuteNonQuery()
+            rd = cmd.ExecuteReader()
+            rd.Read()
+            If rd.HasRows Then
+                Simpan = False
+                SimpanButton.Text = "&Update Data"
+            End If
+        Else
+            Simpan = True
+            SimpanButton.Text = "&Tambahkan Data"
+            rd.Close()
+            con.Close()
+        End If
+
+    End Sub
+
+    Private Sub MetroButton4_Click(sender As Object, e As EventArgs) Handles MetroButton4.Click
+        Close()
+    End Sub
+
+    Private Sub JudulBukuLabel_Click(sender As Object, e As EventArgs) Handles JudulBukuLabel.Click
 
     End Sub
 End Class

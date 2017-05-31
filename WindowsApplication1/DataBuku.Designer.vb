@@ -35,28 +35,29 @@ Partial Class DataBukuForm
         Me.JumlahBukuTB = New MetroFramework.Controls.MetroTextBox()
         Me.MetroLabel5 = New MetroFramework.Controls.MetroLabel()
         Me.SimpanButton = New MetroFramework.Controls.MetroButton()
-        Me.MetroButton2 = New MetroFramework.Controls.MetroButton()
-        Me.MetroButton3 = New MetroFramework.Controls.MetroButton()
+        Me.EditBuku = New MetroFramework.Controls.MetroButton()
+        Me.HapusBuku = New MetroFramework.Controls.MetroButton()
         Me.MetroButton4 = New MetroFramework.Controls.MetroButton()
         Me.Pengarang = New MetroFramework.Controls.MetroLabel()
         Me.MetroLabel6 = New MetroFramework.Controls.MetroLabel()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.JudulBukuLabel = New MetroFramework.Controls.MetroLabel()
         Me.MetroLabel7 = New MetroFramework.Controls.MetroLabel()
         Me.TahunLabel = New MetroFramework.Controls.MetroLabel()
         Me.UploadThumbBtn = New MetroFramework.Controls.MetroButton()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
-        Me.MetroButton1 = New MetroFramework.Controls.MetroButton()
+        Me.DetailGrid = New MetroFramework.Controls.MetroButton()
         Me.MetroLabel8 = New MetroFramework.Controls.MetroLabel()
         Me.KodeBuku = New MetroFramework.Controls.MetroLabel()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Author = New MetroFramework.Controls.MetroLabel()
+        Me.ThumbBox = New System.Windows.Forms.PictureBox()
+        CType(Me.ThumbBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'MetroLabel1
         '
         Me.MetroLabel1.AutoSize = True
-        Me.MetroLabel1.Location = New System.Drawing.Point(23, 82)
+        Me.MetroLabel1.Location = New System.Drawing.Point(23, 130)
         Me.MetroLabel1.Name = "MetroLabel1"
         Me.MetroLabel1.Size = New System.Drawing.Size(71, 19)
         Me.MetroLabel1.TabIndex = 5
@@ -80,7 +81,7 @@ Partial Class DataBukuForm
         Me.CariBukuText.CustomButton.Visible = False
         Me.CariBukuText.FontSize = MetroFramework.MetroTextBoxSize.Tall
         Me.CariBukuText.Lines = New String(-1) {}
-        Me.CariBukuText.Location = New System.Drawing.Point(361, 514)
+        Me.CariBukuText.Location = New System.Drawing.Point(361, 562)
         Me.CariBukuText.MaxLength = 32767
         Me.CariBukuText.Name = "CariBukuText"
         Me.CariBukuText.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
@@ -99,7 +100,7 @@ Partial Class DataBukuForm
         '
         Me.CariButton.FontSize = MetroFramework.MetroButtonSize.Tall
         Me.CariButton.FontWeight = MetroFramework.MetroButtonWeight.Regular
-        Me.CariButton.Location = New System.Drawing.Point(614, 515)
+        Me.CariButton.Location = New System.Drawing.Point(614, 563)
         Me.CariButton.Name = "CariButton"
         Me.CariButton.Size = New System.Drawing.Size(100, 40)
         Me.CariButton.TabIndex = 7
@@ -122,7 +123,7 @@ Partial Class DataBukuForm
         Me.KodeBukuTB.CustomButton.Visible = False
         Me.KodeBukuTB.FontSize = MetroFramework.MetroTextBoxSize.Tall
         Me.KodeBukuTB.Lines = New String(-1) {}
-        Me.KodeBukuTB.Location = New System.Drawing.Point(23, 104)
+        Me.KodeBukuTB.Location = New System.Drawing.Point(23, 152)
         Me.KodeBukuTB.MaxLength = 32767
         Me.KodeBukuTB.Name = "KodeBukuTB"
         Me.KodeBukuTB.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
@@ -153,7 +154,7 @@ Partial Class DataBukuForm
         Me.JudulBukuTB.CustomButton.Visible = False
         Me.JudulBukuTB.FontSize = MetroFramework.MetroTextBoxSize.Tall
         Me.JudulBukuTB.Lines = New String(-1) {}
-        Me.JudulBukuTB.Location = New System.Drawing.Point(23, 176)
+        Me.JudulBukuTB.Location = New System.Drawing.Point(23, 224)
         Me.JudulBukuTB.MaxLength = 32767
         Me.JudulBukuTB.Name = "JudulBukuTB"
         Me.JudulBukuTB.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
@@ -171,7 +172,7 @@ Partial Class DataBukuForm
         'MetroLabel2
         '
         Me.MetroLabel2.AutoSize = True
-        Me.MetroLabel2.Location = New System.Drawing.Point(23, 154)
+        Me.MetroLabel2.Location = New System.Drawing.Point(23, 202)
         Me.MetroLabel2.Name = "MetroLabel2"
         Me.MetroLabel2.Size = New System.Drawing.Size(71, 19)
         Me.MetroLabel2.TabIndex = 9
@@ -193,7 +194,7 @@ Partial Class DataBukuForm
         Me.PengarangTB.CustomButton.Visible = False
         Me.PengarangTB.FontSize = MetroFramework.MetroTextBoxSize.Tall
         Me.PengarangTB.Lines = New String(-1) {}
-        Me.PengarangTB.Location = New System.Drawing.Point(23, 250)
+        Me.PengarangTB.Location = New System.Drawing.Point(23, 298)
         Me.PengarangTB.MaxLength = 32767
         Me.PengarangTB.Name = "PengarangTB"
         Me.PengarangTB.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
@@ -211,7 +212,7 @@ Partial Class DataBukuForm
         'MetroLabel3
         '
         Me.MetroLabel3.AutoSize = True
-        Me.MetroLabel3.Location = New System.Drawing.Point(23, 228)
+        Me.MetroLabel3.Location = New System.Drawing.Point(23, 276)
         Me.MetroLabel3.Name = "MetroLabel3"
         Me.MetroLabel3.Size = New System.Drawing.Size(72, 19)
         Me.MetroLabel3.TabIndex = 11
@@ -233,7 +234,7 @@ Partial Class DataBukuForm
         Me.TahunBukuTB.CustomButton.Visible = False
         Me.TahunBukuTB.FontSize = MetroFramework.MetroTextBoxSize.Tall
         Me.TahunBukuTB.Lines = New String(-1) {}
-        Me.TahunBukuTB.Location = New System.Drawing.Point(23, 331)
+        Me.TahunBukuTB.Location = New System.Drawing.Point(23, 379)
         Me.TahunBukuTB.MaxLength = 32767
         Me.TahunBukuTB.Name = "TahunBukuTB"
         Me.TahunBukuTB.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
@@ -251,7 +252,7 @@ Partial Class DataBukuForm
         'MetroLabel4
         '
         Me.MetroLabel4.AutoSize = True
-        Me.MetroLabel4.Location = New System.Drawing.Point(23, 309)
+        Me.MetroLabel4.Location = New System.Drawing.Point(23, 357)
         Me.MetroLabel4.Name = "MetroLabel4"
         Me.MetroLabel4.Size = New System.Drawing.Size(74, 19)
         Me.MetroLabel4.TabIndex = 13
@@ -273,7 +274,7 @@ Partial Class DataBukuForm
         Me.JumlahBukuTB.CustomButton.Visible = False
         Me.JumlahBukuTB.FontSize = MetroFramework.MetroTextBoxSize.Tall
         Me.JumlahBukuTB.Lines = New String(-1) {}
-        Me.JumlahBukuTB.Location = New System.Drawing.Point(175, 331)
+        Me.JumlahBukuTB.Location = New System.Drawing.Point(175, 379)
         Me.JumlahBukuTB.MaxLength = 32767
         Me.JumlahBukuTB.Name = "JumlahBukuTB"
         Me.JumlahBukuTB.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
@@ -291,7 +292,7 @@ Partial Class DataBukuForm
         'MetroLabel5
         '
         Me.MetroLabel5.AutoSize = True
-        Me.MetroLabel5.Location = New System.Drawing.Point(175, 309)
+        Me.MetroLabel5.Location = New System.Drawing.Point(175, 357)
         Me.MetroLabel5.Name = "MetroLabel5"
         Me.MetroLabel5.Size = New System.Drawing.Size(82, 19)
         Me.MetroLabel5.TabIndex = 16
@@ -301,40 +302,40 @@ Partial Class DataBukuForm
         '
         Me.SimpanButton.FontSize = MetroFramework.MetroButtonSize.Tall
         Me.SimpanButton.FontWeight = MetroFramework.MetroButtonWeight.Regular
-        Me.SimpanButton.Location = New System.Drawing.Point(23, 514)
+        Me.SimpanButton.Location = New System.Drawing.Point(23, 562)
         Me.SimpanButton.Name = "SimpanButton"
         Me.SimpanButton.Size = New System.Drawing.Size(149, 40)
         Me.SimpanButton.TabIndex = 17
         Me.SimpanButton.Text = "Simpan"
         Me.SimpanButton.UseSelectable = True
         '
-        'MetroButton2
+        'EditBuku
         '
-        Me.MetroButton2.FontSize = MetroFramework.MetroButtonSize.Tall
-        Me.MetroButton2.FontWeight = MetroFramework.MetroButtonWeight.Regular
-        Me.MetroButton2.Location = New System.Drawing.Point(361, 468)
-        Me.MetroButton2.Name = "MetroButton2"
-        Me.MetroButton2.Size = New System.Drawing.Size(180, 40)
-        Me.MetroButton2.TabIndex = 18
-        Me.MetroButton2.Text = "Edit"
-        Me.MetroButton2.UseSelectable = True
+        Me.EditBuku.FontSize = MetroFramework.MetroButtonSize.Tall
+        Me.EditBuku.FontWeight = MetroFramework.MetroButtonWeight.Regular
+        Me.EditBuku.Location = New System.Drawing.Point(361, 516)
+        Me.EditBuku.Name = "EditBuku"
+        Me.EditBuku.Size = New System.Drawing.Size(180, 40)
+        Me.EditBuku.TabIndex = 18
+        Me.EditBuku.Text = "Edit"
+        Me.EditBuku.UseSelectable = True
         '
-        'MetroButton3
+        'HapusBuku
         '
-        Me.MetroButton3.FontSize = MetroFramework.MetroButtonSize.Tall
-        Me.MetroButton3.FontWeight = MetroFramework.MetroButtonWeight.Regular
-        Me.MetroButton3.Location = New System.Drawing.Point(547, 468)
-        Me.MetroButton3.Name = "MetroButton3"
-        Me.MetroButton3.Size = New System.Drawing.Size(167, 40)
-        Me.MetroButton3.TabIndex = 19
-        Me.MetroButton3.Text = "Hapus"
-        Me.MetroButton3.UseSelectable = True
+        Me.HapusBuku.FontSize = MetroFramework.MetroButtonSize.Tall
+        Me.HapusBuku.FontWeight = MetroFramework.MetroButtonWeight.Regular
+        Me.HapusBuku.Location = New System.Drawing.Point(547, 516)
+        Me.HapusBuku.Name = "HapusBuku"
+        Me.HapusBuku.Size = New System.Drawing.Size(167, 40)
+        Me.HapusBuku.TabIndex = 19
+        Me.HapusBuku.Text = "Hapus"
+        Me.HapusBuku.UseSelectable = True
         '
         'MetroButton4
         '
         Me.MetroButton4.FontSize = MetroFramework.MetroButtonSize.Tall
         Me.MetroButton4.FontWeight = MetroFramework.MetroButtonWeight.Regular
-        Me.MetroButton4.Location = New System.Drawing.Point(178, 515)
+        Me.MetroButton4.Location = New System.Drawing.Point(178, 563)
         Me.MetroButton4.Name = "MetroButton4"
         Me.MetroButton4.Size = New System.Drawing.Size(146, 40)
         Me.MetroButton4.TabIndex = 20
@@ -345,46 +346,38 @@ Partial Class DataBukuForm
         '
         Me.Pengarang.AutoSize = True
         Me.Pengarang.FontWeight = MetroFramework.MetroLabelWeight.Bold
-        Me.Pengarang.Location = New System.Drawing.Point(567, 173)
+        Me.Pengarang.Location = New System.Drawing.Point(567, 221)
         Me.Pengarang.Name = "Pengarang"
-        Me.Pengarang.Size = New System.Drawing.Size(45, 19)
+        Me.Pengarang.Size = New System.Drawing.Size(0, 0)
         Me.Pengarang.Style = MetroFramework.MetroColorStyle.Black
         Me.Pengarang.TabIndex = 22
-        Me.Pengarang.Text = "None"
+        Me.Pengarang.WrapToLine = True
         '
         'MetroLabel6
         '
         Me.MetroLabel6.AutoSize = True
-        Me.MetroLabel6.Location = New System.Drawing.Point(567, 154)
+        Me.MetroLabel6.Location = New System.Drawing.Point(567, 202)
         Me.MetroLabel6.Name = "MetroLabel6"
         Me.MetroLabel6.Size = New System.Drawing.Size(72, 19)
         Me.MetroLabel6.TabIndex = 23
         Me.MetroLabel6.Text = "Pengarang"
         '
-        'PictureBox1
-        '
-        Me.PictureBox1.Location = New System.Drawing.Point(361, 104)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(200, 262)
-        Me.PictureBox1.TabIndex = 24
-        Me.PictureBox1.TabStop = False
-        '
         'JudulBukuLabel
         '
-        Me.JudulBukuLabel.AutoSize = True
         Me.JudulBukuLabel.FontSize = MetroFramework.MetroLabelSize.Tall
         Me.JudulBukuLabel.FontWeight = MetroFramework.MetroLabelWeight.Bold
-        Me.JudulBukuLabel.Location = New System.Drawing.Point(361, 377)
+        Me.JudulBukuLabel.Location = New System.Drawing.Point(361, 425)
         Me.JudulBukuLabel.Name = "JudulBukuLabel"
-        Me.JudulBukuLabel.Size = New System.Drawing.Size(58, 25)
+        Me.JudulBukuLabel.Size = New System.Drawing.Size(353, 67)
         Me.JudulBukuLabel.Style = MetroFramework.MetroColorStyle.Black
         Me.JudulBukuLabel.TabIndex = 25
         Me.JudulBukuLabel.Text = "None"
+        Me.JudulBukuLabel.WrapToLine = True
         '
         'MetroLabel7
         '
         Me.MetroLabel7.AutoSize = True
-        Me.MetroLabel7.Location = New System.Drawing.Point(567, 204)
+        Me.MetroLabel7.Location = New System.Drawing.Point(567, 289)
         Me.MetroLabel7.Name = "MetroLabel7"
         Me.MetroLabel7.Size = New System.Drawing.Size(42, 19)
         Me.MetroLabel7.TabIndex = 27
@@ -394,7 +387,7 @@ Partial Class DataBukuForm
         '
         Me.TahunLabel.AutoSize = True
         Me.TahunLabel.FontWeight = MetroFramework.MetroLabelWeight.Bold
-        Me.TahunLabel.Location = New System.Drawing.Point(567, 226)
+        Me.TahunLabel.Location = New System.Drawing.Point(567, 311)
         Me.TahunLabel.Name = "TahunLabel"
         Me.TahunLabel.Size = New System.Drawing.Size(45, 19)
         Me.TahunLabel.Style = MetroFramework.MetroColorStyle.Black
@@ -405,7 +398,7 @@ Partial Class DataBukuForm
         '
         Me.UploadThumbBtn.FontSize = MetroFramework.MetroButtonSize.Tall
         Me.UploadThumbBtn.FontWeight = MetroFramework.MetroButtonWeight.Regular
-        Me.UploadThumbBtn.Location = New System.Drawing.Point(23, 377)
+        Me.UploadThumbBtn.Location = New System.Drawing.Point(23, 425)
         Me.UploadThumbBtn.Name = "UploadThumbBtn"
         Me.UploadThumbBtn.Size = New System.Drawing.Size(301, 40)
         Me.UploadThumbBtn.TabIndex = 28
@@ -416,21 +409,21 @@ Partial Class DataBukuForm
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
-        'MetroButton1
+        'DetailGrid
         '
-        Me.MetroButton1.FontSize = MetroFramework.MetroButtonSize.Tall
-        Me.MetroButton1.FontWeight = MetroFramework.MetroButtonWeight.Regular
-        Me.MetroButton1.Location = New System.Drawing.Point(23, 448)
-        Me.MetroButton1.Name = "MetroButton1"
-        Me.MetroButton1.Size = New System.Drawing.Size(301, 40)
-        Me.MetroButton1.TabIndex = 29
-        Me.MetroButton1.Text = "Preview "
-        Me.MetroButton1.UseSelectable = True
+        Me.DetailGrid.FontSize = MetroFramework.MetroButtonSize.Tall
+        Me.DetailGrid.FontWeight = MetroFramework.MetroButtonWeight.Regular
+        Me.DetailGrid.Location = New System.Drawing.Point(23, 516)
+        Me.DetailGrid.Name = "DetailGrid"
+        Me.DetailGrid.Size = New System.Drawing.Size(301, 40)
+        Me.DetailGrid.TabIndex = 29
+        Me.DetailGrid.Text = "Detail Data Buku"
+        Me.DetailGrid.UseSelectable = True
         '
         'MetroLabel8
         '
         Me.MetroLabel8.AutoSize = True
-        Me.MetroLabel8.Location = New System.Drawing.Point(567, 104)
+        Me.MetroLabel8.Location = New System.Drawing.Point(567, 152)
         Me.MetroLabel8.Name = "MetroLabel8"
         Me.MetroLabel8.Size = New System.Drawing.Size(71, 19)
         Me.MetroLabel8.TabIndex = 31
@@ -440,31 +433,51 @@ Partial Class DataBukuForm
         '
         Me.KodeBuku.AutoSize = True
         Me.KodeBuku.FontWeight = MetroFramework.MetroLabelWeight.Bold
-        Me.KodeBuku.Location = New System.Drawing.Point(567, 123)
+        Me.KodeBuku.Location = New System.Drawing.Point(567, 171)
         Me.KodeBuku.Name = "KodeBuku"
         Me.KodeBuku.Size = New System.Drawing.Size(45, 19)
         Me.KodeBuku.Style = MetroFramework.MetroColorStyle.Black
         Me.KodeBuku.TabIndex = 30
         Me.KodeBuku.Text = "None"
         '
+        'Author
+        '
+        Me.Author.FontWeight = MetroFramework.MetroLabelWeight.Bold
+        Me.Author.Location = New System.Drawing.Point(567, 224)
+        Me.Author.Name = "Author"
+        Me.Author.Size = New System.Drawing.Size(155, 65)
+        Me.Author.Style = MetroFramework.MetroColorStyle.Black
+        Me.Author.TabIndex = 32
+        Me.Author.Text = "None"
+        Me.Author.WrapToLine = True
+        '
+        'ThumbBox
+        '
+        Me.ThumbBox.Location = New System.Drawing.Point(361, 152)
+        Me.ThumbBox.Name = "ThumbBox"
+        Me.ThumbBox.Size = New System.Drawing.Size(200, 262)
+        Me.ThumbBox.TabIndex = 24
+        Me.ThumbBox.TabStop = False
+        '
         'DataBukuForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(737, 587)
+        Me.ClientSize = New System.Drawing.Size(737, 626)
+        Me.Controls.Add(Me.Author)
         Me.Controls.Add(Me.MetroLabel8)
         Me.Controls.Add(Me.KodeBuku)
-        Me.Controls.Add(Me.MetroButton1)
+        Me.Controls.Add(Me.DetailGrid)
         Me.Controls.Add(Me.UploadThumbBtn)
         Me.Controls.Add(Me.MetroLabel7)
         Me.Controls.Add(Me.TahunLabel)
         Me.Controls.Add(Me.JudulBukuLabel)
-        Me.Controls.Add(Me.PictureBox1)
+        Me.Controls.Add(Me.ThumbBox)
         Me.Controls.Add(Me.MetroLabel6)
         Me.Controls.Add(Me.Pengarang)
         Me.Controls.Add(Me.MetroButton4)
-        Me.Controls.Add(Me.MetroButton3)
-        Me.Controls.Add(Me.MetroButton2)
+        Me.Controls.Add(Me.HapusBuku)
+        Me.Controls.Add(Me.EditBuku)
         Me.Controls.Add(Me.SimpanButton)
         Me.Controls.Add(Me.MetroLabel5)
         Me.Controls.Add(Me.JumlahBukuTB)
@@ -480,7 +493,7 @@ Partial Class DataBukuForm
         Me.Controls.Add(Me.CariBukuText)
         Me.Name = "DataBukuForm"
         Me.Text = "Data Buku"
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ThumbBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -499,19 +512,20 @@ Partial Class DataBukuForm
     Friend WithEvents JumlahBukuTB As MetroFramework.Controls.MetroTextBox
     Friend WithEvents MetroLabel5 As MetroFramework.Controls.MetroLabel
     Friend WithEvents SimpanButton As MetroFramework.Controls.MetroButton
-    Friend WithEvents MetroButton2 As MetroFramework.Controls.MetroButton
-    Friend WithEvents MetroButton3 As MetroFramework.Controls.MetroButton
+    Friend WithEvents EditBuku As MetroFramework.Controls.MetroButton
+    Friend WithEvents HapusBuku As MetroFramework.Controls.MetroButton
     Friend WithEvents MetroButton4 As MetroFramework.Controls.MetroButton
     Friend WithEvents Pengarang As MetroFramework.Controls.MetroLabel
     Friend WithEvents MetroLabel6 As MetroFramework.Controls.MetroLabel
-    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents ThumbBox As PictureBox
     Friend WithEvents JudulBukuLabel As MetroFramework.Controls.MetroLabel
     Friend WithEvents MetroLabel7 As MetroFramework.Controls.MetroLabel
     Friend WithEvents TahunLabel As MetroFramework.Controls.MetroLabel
     Friend WithEvents UploadThumbBtn As MetroFramework.Controls.MetroButton
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents ColorDialog1 As ColorDialog
-    Friend WithEvents MetroButton1 As MetroFramework.Controls.MetroButton
+    Friend WithEvents DetailGrid As MetroFramework.Controls.MetroButton
     Friend WithEvents MetroLabel8 As MetroFramework.Controls.MetroLabel
     Friend WithEvents KodeBuku As MetroFramework.Controls.MetroLabel
+    Friend WithEvents Author As MetroFramework.Controls.MetroLabel
 End Class
